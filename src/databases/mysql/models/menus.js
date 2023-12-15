@@ -59,5 +59,14 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false,
     });
 
+    // try many to many
+    Menus.associate = (models) => {
+        Menus.belongsToMany(models.Carts, {
+            through: 'CartMenu',
+            foreignKey: 'menu_id',
+            otherKey: 'cart_id',
+        });
+    };
+
     return Menus;
 }

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT
         },
 
-        drivers_id: {
+        driver_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {

@@ -23,14 +23,14 @@ module.exports = {
             },
 
             driver_id: {
-              type: Sequelize.BIGINT,
-              allowNull: false,
-              references: {
-                  model: 'Drivers',
-                  key: 'id',
-              },
-              onDelete: 'cascade',
-              onUpdate: 'cascade',
+                type: Sequelize.BIGINT,
+                allowNull: false,
+                references: {
+                    model: 'Drivers',
+                    key: 'id',
+                },
+                onDelete: 'cascade',
+                onUpdate: 'cascade',
             },
 
             status: {

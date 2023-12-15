@@ -11,7 +11,7 @@ module.exports = {
           type: Sequelize.BIGINT
       },
 
-      drivers_id: {
+      driver_id: {
           type: Sequelize.BIGINT,
           allowNull: false,
           references: {
