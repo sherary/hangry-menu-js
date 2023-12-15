@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Locations = sequelize.define('locations', {
+  const Locations = sequelize.define('outlet_locations', {
       id: {
           allowNull: false,
           primaryKey: true,
@@ -7,23 +7,11 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.BIGINT
       },
 
-      user_id: {
+      outlet_id: {
           type: DataTypes.BIGINT,
           allowNull: false,
           references: {
-              model: 'Users',
-              key: 'id',
-          },
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
-      },
-
-      restaurant_id: {
-          type: DataTypes.BIGINT,
-          allowNull: true,
-          defaultValue: 0,
-          references: {
-              model: 'Restaurants',
+              model: 'Outlets',
               key: 'id',
           },
           onDelete: 'cascade',
@@ -33,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       tag: {
           type: DataTypes.STRING(50),
           allowNull: false,
-          defaultValue: "Address"
+          defaultValue: "Home Address"
       },
 
       street_address: {
@@ -42,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
           defaultValue: "",
       },
 
-      district_regency: {
+      additional_info: {
           type: DataTypes.STRING(100),
           allowNull: true,
           defaultValue: ""
@@ -95,11 +83,11 @@ module.exports = (sequelize, DataTypes) => {
       },
   }, {
       sequelize,
-      modelName: 'Locations',
-      tableName: 'locations',
+      modelName: 'OutletLocations',
+      tableName: 'outlet_locations',
       freezeTableName: true,
       timestamps: false,
   });
 
-  return Locations;
+    return Locations;
 }

@@ -1,23 +1,56 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class deliveries extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  deliveries.init({
-    name: DataTypes.STRING
+  const Deliveries = sequelize.define('deliveries', {
+      id: {
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true,
+          type: DataTypes.BIGINT
+      },
+
+      order_id: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          references: {
+              model: 'Orders',
+              key: 'id',
+          },
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      },
+
+      driver_id: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'Drivers',
+            key: 'id',
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      },
+
+      status: {
+          type: DataTypes.ENUM("pending", "confirmed", "rejected", "canceled", "on_delivery", "delivered"),
+          allowNull: true,
+          defaultValue: "pending", 
+      },
+
+      added_at: {
+          type: DataTypes.DATE,
+          allowNull: false,
+      },
+
+      updated_at: {
+          type: DataTypes.DATE,
+          allowNull: false,
+      },
   }, {
-    sequelize,
-    modelName: 'deliveries',
+      sequelize,
+      modelName: 'Deliveries',
+      tableName: 'deliveries',
+      freezeTableName: true,
+      timestamps: false,
   });
-  return deliveries;
-};
+
+  return Deliveries;
+}

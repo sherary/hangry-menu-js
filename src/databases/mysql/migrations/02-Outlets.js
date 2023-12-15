@@ -3,19 +3,19 @@
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('menu_items', {
+        await queryInterface.createTable('outlets', {
             id: {
                 allowNull: false,
                 primaryKey: true,
                 autoIncrement: true,
                 type: Sequelize.BIGINT
             },
-
-            restaurant_id: {
+    
+            owner_id: {
                 type: Sequelize.BIGINT,
                 allowNull: false,
                 references: {
-                    model: 'Restaurants',
+                    model: 'Users',
                     key: 'id',
                 },
                 onDelete: 'cascade',
@@ -24,26 +24,20 @@ module.exports = {
 
             name: {
                 type: Sequelize.STRING(50),
-                allowNull: false,
+                allowNull: true,
                 defaultValue: ""
             },
 
-            description: {
+            type: {
+                type: Sequelize.ENUM("chinese", "western", "local", "indian"),
+                allowNull: false,
+                defaultValue: "local",
+            },
+
+            phone: {
                 type: Sequelize.STRING(14),
                 allowNull: true,
                 defaultValue: "", 
-            },
-
-            price: {
-                type: Sequelize.DECIMAL(10, 2),
-                allowNull: false,
-                defaultValue: 10000.00,
-            },
-
-            availability: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                defaultValue: 1,
             },
 
             added_at: {
@@ -58,7 +52,7 @@ module.exports = {
         });
     },
 
-    async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('menu_items');
+    async down(queryInterface, sequelize) {
+        await queryInterface.dropTable('outlets');
     }
 };

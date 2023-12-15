@@ -3,7 +3,7 @@
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('order_items', {
+        await queryInterface.createTable('menus', {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -11,41 +11,30 @@ module.exports = {
                 type: Sequelize.BIGINT
             },
 
-            order_id: {
+            outlet_id: {
                 type: Sequelize.BIGINT,
                 allowNull: false,
                 references: {
-                    model: 'Orders',
+                    model: 'Outlets',
                     key: 'id',
                 },
                 onDelete: 'cascade',
                 onUpdate: 'cascade',
             },
 
-            menu_item_id: {
-                type: Sequelize.BIGINT,
+            name: {
+                type: Sequelize.STRING(50),
                 allowNull: false,
-                references: {
-                    model: 'menu_items',
-                    key: 'id',
-                },
-                onDelete: 'cascade',
-                onUpdate: 'cascade',
+                defaultValue: ""
             },
 
-            qty: {
-                type: Sequelize.INTEGER(4),
-                allowNull: false,
-                defaultValue: 1, 
-            },
-
-            applied_item_discount: {
-                type: Sequelize.DECIMAL(10, 2),
+            description: {
+                type: Sequelize.STRING(14),
                 allowNull: true,
-                defaultValue: 0.00,
+                defaultValue: "", 
             },
 
-            subtotal: {
+            price: {
                 type: Sequelize.DECIMAL(10, 2),
                 allowNull: false,
                 defaultValue: 10000.00,
@@ -70,6 +59,6 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('order_items');
+        await queryInterface.dropTable('menus');
     }
 };

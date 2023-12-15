@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const MenuItems = sequelize.define('menu_items', {
+    const MenuReviews = sequelize.define('menu_reviews', {
         id: {
             allowNull: false,
             primaryKey: true,
@@ -7,39 +7,37 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT
         },
 
-        restaurant_id: {
+        customer_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {
-                model: 'Restaurants',
+                model: 'Users',
                 key: 'id',
             },
             onDelete: 'cascade',
             onUpdate: 'cascade',
         },
 
-        name: {
-            type: DataTypes.STRING(50),
+        menu_item_id: {
+            type: DataTypes.BIGINT,
             allowNull: false,
-            defaultValue: ""
+            references: {
+                model: 'Menus',
+                key: 'id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+        },
+
+        rating: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
         },
 
         description: {
-            type: DataTypes.STRING(14),
+            type: DataTypes.TEXT,
             allowNull: true,
-            defaultValue: "", 
-        },
-
-        price: {
-            type: DataTypes.DECIMAL(10, 2),
-            allowNull: false,
-            defaultValue: 10000.00,
-        },
-
-        availability: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1,
+            defaultValue: ""
         },
 
         added_at: {
@@ -53,11 +51,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'MenuItems',
-        tableName: 'menu_items',
+        modelName: 'MenuReviews',
+        tableName: 'menu_reviews',
         freezeTableName: true,
         timestamps: false,
     });
 
-    return MenuItems;
+    return MenuReviews;
 }

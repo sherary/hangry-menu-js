@@ -3,7 +3,7 @@
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Orders', {
+        await queryInterface.createTable('order_items', {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -11,55 +11,50 @@ module.exports = {
                 type: Sequelize.BIGINT
             },
 
-            customer_id: {
+            order_id: {
                 type: Sequelize.BIGINT,
                 allowNull: false,
                 references: {
-                    model: 'Users',
+                    model: 'Orders',
                     key: 'id',
                 },
                 onDelete: 'cascade',
                 onUpdate: 'cascade',
             },
 
-            restaurant_id: {
+            menu_item_id: {
                 type: Sequelize.BIGINT,
                 allowNull: false,
                 references: {
-                    model: 'Restaurants',
+                    model: 'Menus',
                     key: 'id',
                 },
                 onDelete: 'cascade',
                 onUpdate: 'cascade',
             },
 
-            driver_id: {
-                type: Sequelize.BIGINT,
+            qty: {
+                type: Sequelize.INTEGER(4),
                 allowNull: false,
-                references: {
-                    model: 'Drivers',
-                    key: 'id',
-                },
-                onDelete: 'cascade',
-                onUpdate: 'cascade',
+                defaultValue: 1, 
             },
 
-            status: {
-                type: Sequelize.ENUM("pending", "confirmed", "rejected", "canceled", "on_delivery", "delivered"),
-                allowNull: true,
-                defaultValue: "pending", 
-            },
-
-            discount_applied: {
+            applied_item_discount: {
                 type: Sequelize.DECIMAL(10, 2),
-                allowNull: false,
+                allowNull: true,
                 defaultValue: 0.00,
             },
 
-            total_amount: {
+            subtotal: {
                 type: Sequelize.DECIMAL(10, 2),
                 allowNull: false,
                 defaultValue: 10000.00,
+            },
+
+            availability: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 1,
             },
 
             added_at: {
@@ -73,8 +68,8 @@ module.exports = {
             },
         });
     },
-    
+
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Orders');
+        await queryInterface.dropTable('order_items');
     }
 };

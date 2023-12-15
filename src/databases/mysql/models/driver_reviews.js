@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const OrderItems = sequelize.define('order_items', {
+    const DriverReview = sequelize.define('driver_reviews', {
         id: {
             allowNull: false,
             primaryKey: true,
@@ -7,50 +7,37 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT
         },
 
-        order_id: {
+        customer_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {
-                model: 'Orders',
+                model: 'Users',
                 key: 'id',
             },
             onDelete: 'cascade',
             onUpdate: 'cascade',
         },
 
-        menu_item_id: {
+        driver_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {
-                model: 'Menus',
+                model: 'Drivers',
                 key: 'id',
             },
             onDelete: 'cascade',
             onUpdate: 'cascade',
         },
 
-        qty: {
-            type: DataTypes.INTEGER(4),
-            allowNull: false,
-            defaultValue: 1, 
-        },
-
-        applied_item_discount: {
+        rating: {
             type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+        },
+
+        description: {
+            type: DataTypes.TEXT,
             allowNull: true,
-            defaultValue: 0.00,
-        },
-
-        subtotal: {
-            type: DataTypes.DECIMAL(10, 2),
-            allowNull: false,
-            defaultValue: 10000.00,
-        },
-
-        availability: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1,
+            defaultValue: ""
         },
 
         added_at: {
@@ -64,11 +51,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'OrderItems',
-        tableName: 'order_items',
+        modelName: 'DriverReviews',
+        tableName: 'driver_reviews',
         freezeTableName: true,
         timestamps: false,
     });
 
-    return OrderItems;
+    return DriverReview;
 }

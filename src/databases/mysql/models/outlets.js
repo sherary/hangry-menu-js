@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Carts = sequelize.define('carts', {
+    const Restaurants = sequelize.define('outlets', {
         id: {
             allowNull: false,
             primaryKey: true,
@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT
         },
 
-        customer_id: {
+        owner_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
-            references: {
+            reference: {
                 model: 'Users',
                 key: 'id',
             },
@@ -18,21 +18,22 @@ module.exports = (sequelize, DataTypes) => {
             onUpdate: 'cascade',
         },
 
-        dish_id: {
-            type: DataTypes.BIGINT,
-            allowNull: false,
-            references: {
-                model: 'Menus',
-                key: 'id',
-            },
-            onDelete: 'cascade',
-            onUpdate: 'cascade',
+        name: {
+            type: DataTypes.STRING(50),
+            allowNull: true,
+            defaultValue: ""
         },
 
-        qty: {
-            type: DataTypes.INTEGER(2),
+        type: {
+            type: DataTypes.ENUM("chinese", "western", "local", "indian"),
             allowNull: false,
-            defaultValue: 1,
+            defaultValue: "local",
+        },
+
+        phone: {
+            type: DataTypes.STRING(14),
+            allowNull: true,
+            defaultValue: "", 
         },
 
         added_at: {
@@ -46,11 +47,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'Carts',
-        tableName: 'carts',
+        modelName: 'Outlets',
+        tableName: 'outlets',
         freezeTableName: true,
-        timestamp: false,
+        timestamps: false,
     });
 
-    return Carts;
+    return Restaurants;
 }

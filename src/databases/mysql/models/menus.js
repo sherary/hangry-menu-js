@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Restaurants = sequelize.define('restaurants', {
+    const Menus = sequelize.define('menus', {
         id: {
             allowNull: false,
             primaryKey: true,
@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT
         },
 
-        owner_id: {
+        outlet_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
-            reference: {
-                model: 'Users',
+            references: {
+                model: 'outlets',
                 key: 'id',
             },
             onDelete: 'cascade',
@@ -20,14 +20,26 @@ module.exports = (sequelize, DataTypes) => {
 
         name: {
             type: DataTypes.STRING(50),
-            allowNull: true,
+            allowNull: false,
             defaultValue: ""
         },
 
-        phone: {
+        description: {
             type: DataTypes.STRING(14),
             allowNull: true,
             defaultValue: "", 
+        },
+
+        price: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+            defaultValue: 10000.00,
+        },
+
+        availability: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
         },
 
         added_at: {
@@ -41,11 +53,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'Restaurants',
-        tableName: 'restaurants',
+        modelName: 'Menus',
+        tableName: 'menus',
         freezeTableName: true,
         timestamps: false,
     });
 
-    return Restaurants;
+    return Menus;
 }

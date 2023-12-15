@@ -8,21 +8,21 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         customer_id: {
-          type: DataTypes.BIGINT,
-          allowNull: false,
-          references: {
-              model: 'Users',
-              key: 'id',
-          },
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
-        },
-
-        restaurant_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {
-                model: 'Restaurants',
+                model: 'Users',
+                key: 'id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+        },
+
+        outlet_id: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: 'Outlets',
                 key: 'id',
             },
             onDelete: 'cascade',
@@ -30,14 +30,14 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         driver_id: {
-          type: DataTypes.BIGINT,
-          allowNull: false,
-          references: {
-              model: 'Drivers',
-              key: 'id',
-          },
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: 'Drivers',
+                key: 'id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
         },
 
         status: {
