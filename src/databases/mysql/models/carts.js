@@ -10,16 +10,29 @@ module.exports = (sequelize, DataTypes) => {
       customer_id: {
           type: DataTypes.BIGINT,
           allowNull: false,
-      },
+          references: {
+              model: 'Users',
+              key: 'id',
+          },
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+    },
 
       dish_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          references: {
+              model: 'menu_items',
+              key: 'id',
+          },
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
       },
 
       qty: {
           type: DataTypes.INTEGER(2),
           allowNull: false,
+          defaultValue: 1,
       },
 
       added_at: {
@@ -28,8 +41,8 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       updated_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
+          type: DataTypes.DATE,
+          allowNull: false,
       },
   }, {
       sequelize,
