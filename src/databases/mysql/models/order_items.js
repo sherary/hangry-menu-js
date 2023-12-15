@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const MenuItems = sequelize.define('menu_items', {
+    const OrderItems = sequelize.define('order_items', {
         id: {
             allowNull: false,
             primaryKey: true,
@@ -7,30 +7,41 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT
         },
 
-        restaurant_id: {
+        order_id: {
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {
-                model: 'Restaurants',
+                model: 'Orders',
                 key: 'id',
             },
             onDelete: 'cascade',
             onUpdate: 'cascade',
         },
 
-        name: {
-            type: DataTypes.STRING(50),
+        menu_item_id: {
+            type: DataTypes.BIGINT,
             allowNull: false,
-            defaultValue: ""
+            references: {
+                model: 'menu_items',
+                key: 'id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
         },
 
-        description: {
-            type: DataTypes.STRING(14),
+        qty: {
+            type: DataTypes.INTEGER(4),
+            allowNull: false,
+            defaultValue: 1, 
+        },
+
+        applied_item_discount: {
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: true,
-            defaultValue: "", 
+            defaultValue: 0.00,
         },
 
-        price: {
+        subtotal: {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
             defaultValue: 10000.00,
@@ -53,11 +64,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'MenuItems',
-        tableName: 'menu_items',
+        modelName: 'OrderItems',
+        tableName: 'order_items',
         freezeTableName: true,
         timestamps: false,
     });
 
-    return MenuItems;
+    return OrderItems;
 }
