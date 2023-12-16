@@ -45,9 +45,21 @@ module.exports = {
             },
       
             updated_at: {
-              type: Sequelize.DATE,
-              allowNull: false,
+                type: Sequelize.DATE,
+                allowNull: false,
             },
+        });
+
+        await queryInterface.addIndex('users', {
+            name: 'IDX_USER',
+            type: 'BTREE',
+            fields: ['email', 'phone'],
+        });
+
+        await queryInterface.addIndex('users', {
+            name: 'IDX_UNIQUE',
+            unique: true,
+            fields: ['email', 'phone'],
         });
     },
 

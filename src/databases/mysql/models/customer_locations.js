@@ -87,6 +87,14 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'locations',
         freezeTableName: true,
         timestamps: false,
+        indexes: [{
+            type: 'SPATIAL',
+            fields: ['lat', 'long']
+        }, {
+            name: 'IDX_STREET_ADDRESS',
+            type: 'BTREE',
+            fields: ['street_address']
+        }]
     });
 
     return Locations;

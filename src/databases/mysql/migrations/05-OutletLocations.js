@@ -65,15 +65,15 @@ module.exports = {
             },
 
             lat: {
-                type: Sequelize.DECIMAL(10, 8),
+                type: Sequelize.DOUBLE,
                 allowNull: false,
-                defaultValue: "0.0"
+                defaultValue: 0.0
             },
 
             long: {
-                type: Sequelize.DECIMAL(10, 8),
+                type: Sequelize.DOUBLE,
                 allowNull: false,
-                defaultValue: "0.0"
+                defaultValue: 0.0
             },
 
             added_at: {
@@ -86,6 +86,9 @@ module.exports = {
                 allowNull: false,
             },
         });
+        
+        await queryInterface.addIndex('outlet_locations', ['street_address']);
+        // await queryInterface.sequelize.query('CREATE SPATIAL INDEX lat_long_spatial_index ON outlet_locations (lat, long)');
     },
 
     async down(queryInterface, Sequelize) {

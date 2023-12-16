@@ -90,6 +90,10 @@ module.exports = (sequelize, DataTypes) => {
         indexes: [{
             type: 'SPATIAL',
             fields: ['lat', 'long']
+        }, {
+            name: 'IDX_STREET_ADDRESS',
+            type: 'BTREE',
+            fields: ['street_address']
         }]
     });
 

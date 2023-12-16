@@ -41,8 +41,8 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         updated_at: {
-          type: DataTypes.DATE,
-          allowNull: false,
+            type: DataTypes.DATE,
+            allowNull: false,
         },
     }, {
         sequelize,
@@ -50,6 +50,15 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'users',
         freezeTableName: true,
         timestamps: false,
+        indexes: [{
+            name: 'IDX_USER',
+            type: 'BTREE',
+            fields: ['email', 'phone'],
+        }, {
+            name: 'IDX_UNIQUE',
+            unique: true,
+            fields: ['email', 'phone'],
+        }]
     });
 
     return Users;

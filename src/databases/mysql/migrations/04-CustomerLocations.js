@@ -86,6 +86,8 @@ module.exports = {
                 allowNull: false,
             },
         });
+
+        await queryInterface.addIndex('customer_locations', ['street_address']);
     },
 
     async down(queryInterface, Sequelize) {
