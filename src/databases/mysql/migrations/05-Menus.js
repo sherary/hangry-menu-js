@@ -3,7 +3,7 @@
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('deliveries', {
+        await queryInterface.createTable('menus', {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -11,32 +11,39 @@ module.exports = {
                 type: Sequelize.BIGINT
             },
 
-            order_id: {
+            outlet_id: {
                 type: Sequelize.BIGINT,
                 allowNull: false,
                 references: {
-                    model: 'Orders',
+                    model: 'Outlets',
                     key: 'id',
                 },
                 onDelete: 'cascade',
                 onUpdate: 'cascade',
             },
 
-            driver_id: {
-                type: Sequelize.BIGINT,
+            name: {
+                type: Sequelize.STRING(50),
                 allowNull: false,
-                references: {
-                    model: 'Drivers',
-                    key: 'id',
-                },
-                onDelete: 'cascade',
-                onUpdate: 'cascade',
+                defaultValue: ""
             },
 
-            status: {
-                type: Sequelize.ENUM("pending", "confirmed", "rejected", "canceled", "on_delivery", "delivered"),
+            description: {
+                type: Sequelize.STRING(100),
                 allowNull: true,
-                defaultValue: "pending", 
+                defaultValue: "", 
+            },
+
+            price: {
+                type: Sequelize.DECIMAL(10, 2),
+                allowNull: false,
+                defaultValue: 10000.00,
+            },
+
+            availability: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 1,
             },
 
             added_at: {
@@ -52,6 +59,6 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('deliveries');
+        await queryInterface.dropTable('menus');
     }
 };

@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         postal_code: {
-            type: DataTypes.INTEGER(6),
+            type: DataTypes.STRING(6),
             allowNull: true,
             defaultValue: 0
         },
@@ -63,13 +63,13 @@ module.exports = (sequelize, DataTypes) => {
         lat: {
             type: DataTypes.DECIMAL(10, 8),
             allowNull: false,
-            defaultValue: "0.0"
+            defaultValue: 0.0
         },
 
         long: {
             type: DataTypes.DECIMAL(10, 8),
             allowNull: false,
-            defaultValue: "0.0"
+            defaultValue: 0.0
         },
 
         added_at: {
@@ -83,18 +83,10 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'Locations',
-        tableName: 'locations',
+        modelName: 'CustomerLocations',
+        tableName: 'customer_locations',
         freezeTableName: true,
         timestamps: false,
-        indexes: [{
-            type: 'SPATIAL',
-            fields: ['lat', 'long']
-        }, {
-            name: 'IDX_STREET_ADDRESS',
-            type: 'BTREE',
-            fields: ['street_address']
-        }]
     });
 
     return Locations;

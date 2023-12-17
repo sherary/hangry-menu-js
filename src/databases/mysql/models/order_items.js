@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {
-                model: 'Orders',
+                model: 'Transactions',
                 key: 'id',
             },
             onDelete: 'cascade',
@@ -35,6 +35,17 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 1, 
         },
 
+        item_discount_ticket_id: {
+            type: DataTypes.BIGINT,
+            allowNull: true,
+            references: {
+                model: 'Configurations',
+                key: 'id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+        },
+
         applied_item_discount: {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: true,
@@ -45,12 +56,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
             defaultValue: 10000.00,
-        },
-
-        availability: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1,
         },
 
         added_at: {

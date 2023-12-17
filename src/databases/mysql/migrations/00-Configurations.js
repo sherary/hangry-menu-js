@@ -3,7 +3,7 @@
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('menus', {
+        await queryInterface.createTable('configurations', {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -11,39 +11,36 @@ module.exports = {
                 type: Sequelize.BIGINT
             },
 
-            outlet_id: {
-                type: Sequelize.BIGINT,
-                allowNull: false,
-                references: {
-                    model: 'Outlets',
-                    key: 'id',
-                },
-                onDelete: 'cascade',
-                onUpdate: 'cascade',
-            },
-
-            name: {
+            key: {
                 type: Sequelize.STRING(50),
                 allowNull: false,
-                defaultValue: ""
+            },
+
+            value: {
+                type: Sequelize.STRING(50),
+                allowNull: false,
             },
 
             description: {
-                type: Sequelize.STRING(14),
+                type: Sequelize.TEXT,
                 allowNull: true,
-                defaultValue: "", 
+                defaultValue: ""
             },
 
-            price: {
+            total: {
                 type: Sequelize.DECIMAL(10, 2),
                 allowNull: false,
-                defaultValue: 10000.00,
+                defaultValue: 0.00,
             },
 
-            availability: {
-                type: Sequelize.INTEGER,
+            start_date: {
+                type: Sequelize.DATE,
                 allowNull: false,
-                defaultValue: 1,
+            },
+
+            end_date: {
+                type: Sequelize.DATE,
+                allowNull: false,
             },
 
             added_at: {
@@ -59,6 +56,6 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('menus');
+        await queryInterface.dropTable('configurations');
     }
 };

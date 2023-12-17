@@ -3,7 +3,7 @@
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('orders', {
+        await queryInterface.createTable('transactions', {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -12,10 +12,9 @@ module.exports = {
             },
 
             type: {
-                type: Sequelize.ENUM("pickup", "delivery"),
+                type: Sequelize.ENUM("takeway", "delivery"),
                 allowNull: false,
                 defaultValue: "delivery", 
-                comment: "pickup = 3rd party drivers, delivery = internal drivers",
             },
 
             customer_id: {
@@ -40,21 +39,20 @@ module.exports = {
                 onUpdate: 'cascade',
             },
 
-            driver_id: {
-                type: Sequelize.BIGINT,
-                allowNull: false,
-                references: {
-                    model: 'Drivers',
-                    key: 'id',
-                },
-                onDelete: 'cascade',
-                onUpdate: 'cascade',
-            },
-
             status: {
                 type: Sequelize.ENUM("pending", "confirmed", "rejected", "canceled", "on_delivery", "delivered"),
                 allowNull: true,
                 defaultValue: "pending", 
+            },
+
+            discount_ticket_id: {
+                type: Sequelize.BIGINT,
+                allowNull: true,
+                references: {
+                    model: 'Configurations',
+                    key: 'id',
+                },
+                onDelete: 'cascade'
             },
 
             discount_applied: {
@@ -82,6 +80,6 @@ module.exports = {
     },
     
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('orders');
+        await queryInterface.dropTable('transactions');
     }
 };

@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         role: {
-            type: DataTypes.ENUM("customer", "restaurant", "driver"),
+            type: DataTypes.ENUM("customer", "restaurant"),
             allowNull: false,
             defaultValue: "customer",
         },
@@ -50,15 +50,15 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'users',
         freezeTableName: true,
         timestamps: false,
-        indexes: [{
-            name: 'IDX_USER',
-            type: 'BTREE',
-            fields: ['email', 'phone'],
-        }, {
-            name: 'IDX_UNIQUE',
-            unique: true,
-            fields: ['email', 'phone'],
-        }]
+        // indexes: [{
+        //     name: 'IDX_USER',
+        //     type: 'BTREE',
+        //     fields: ['email', 'phone'],
+        // }, {
+        //     name: 'IDX_UNIQUE',
+        //     unique: true,
+        //     fields: ['email', 'phone'],
+        // }]
     });
 
     return Users;

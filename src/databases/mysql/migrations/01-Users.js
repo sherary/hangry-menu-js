@@ -34,7 +34,7 @@ module.exports = {
             },
       
             role: {
-                type: Sequelize.ENUM("customer", "restaurant", "driver"),
+                type: Sequelize.ENUM("customer", "outlet"),
                 allowNull: false,
                 defaultValue: "customer",
             },
@@ -50,17 +50,17 @@ module.exports = {
             },
         });
 
-        await queryInterface.addIndex('users', {
-            name: 'IDX_USER',
-            type: 'BTREE',
-            fields: ['email', 'phone'],
-        });
+        // await queryInterface.addIndex('users', {
+        //     name: 'IDX_USER',
+        //     type: 'BTREE',
+        //     fields: ['email', 'phone'],
+        // });
 
-        await queryInterface.addIndex('users', {
-            name: 'IDX_UNIQUE',
-            unique: true,
-            fields: ['email', 'phone'],
-        });
+        // await queryInterface.addIndex('users', {
+        //     name: 'IDX_UNIQUE',
+        //     unique: true,
+        //     fields: ['email', 'phone'],
+        // });
     },
 
     async down(queryInterface, sequelize) {
