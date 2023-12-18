@@ -21,9 +21,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/v1', indexRouter);
 
 // catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//     next(createError(404));
-// });
+app.use((req, res, next) => {
+    next(createError(404));
+});
 
 // error handler
 app.use(function(err, req, res, next) {

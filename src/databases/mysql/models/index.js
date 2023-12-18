@@ -46,12 +46,6 @@ db.Users.hasMany(db.Transactions, {
     foreignKey: 'customer_id',
     onDelete: 'cascade',
     onUpdate: 'cascade',
-})
-
-db.Users.hasMany(db.MenuReviews, {
-    foreignKey: 'customer_id',
-    onDelete: 'cascade',
-    onUpdate: 'cascade',
 });
 
 db.Outlets.hasMany(db.OutletLocations, {
@@ -100,12 +94,6 @@ db.Menus.hasMany(db.OrderItems, {
     onUpdate: 'cascade',
 });
 
-db.Menus.hasMany(db.MenuReviews, {
-    foreignKey: 'menu_item_id',
-    onDelete: 'cascade',
-    onUpdate: 'cascade',
-});
-
 db.Menus.belongsTo(db.Outlets, {
     foreignKey: 'outlet_id',
 });
@@ -146,16 +134,16 @@ db.Configurations.hasMany(db.Transactions, {
  * trial many to many associations
  */
 
-db.Menus.belongsToMany(db.Carts, {
-    through: 'CartMenu',
-    foreignKey: 'menu_id',
-    otherKey: 'cart_id',
-});
+// db.Menus.belongsToMany(db.Carts, {
+//     through: 'CartMenu',
+//     foreignKey: 'menu_id',
+//     otherKey: 'cart_id',
+// });
 
-db.Carts.belongsToMany(db.Menus, {
-    through: 'CartMenu',
-    foreignKey: 'cart_id',
-    otherKey: 'menu_id',
-});
+// db.Carts.belongsToMany(db.Menus, {
+//     through: 'CartMenu',
+//     foreignKey: 'cart_id',
+//     otherKey: 'menu_id',
+// });
 
 module.exports = db;
