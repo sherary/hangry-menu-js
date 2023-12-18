@@ -8,9 +8,9 @@ const MenuItems = class {
                 ...req.body
             })
             
-            if (newMenu['err'] == null) {
-                return res.status(201).json({
-                    success: true,
+            if (newMenu['err'] ==  false) {
+                return res.status(newMenu['code']).json({
+                    success: !newMenu['err'],
                     message: "Success creating new menu",
                     data: newMenu['data'],
                 })
@@ -33,9 +33,9 @@ const MenuItems = class {
             }
             const data = await fetchAllData(Menus, options);
 
-            if (data['err'] == null) {
-                return res.status(200).json({
-                    success: true,
+            if (data['err'] == false) {
+                return res.status(data['code']).json({
+                    success: !data['err'],
                     message: "Success get all menu items",
                     data: data['data'],
                 })
@@ -60,9 +60,9 @@ const MenuItems = class {
             
             const data = await fetchAllData(Menus, options);
 
-            if (data['err'] == null) {
-                return res.status(200).json({
-                    success: true,
+            if (data['err'] == false) {
+                return res.status(data['code']).json({
+                    success: !data['err'],
                     message: "Success get menu item",
                     data: data['data'],
                 })
@@ -80,6 +80,12 @@ const MenuItems = class {
     editMenuItemByID = async (req, res, next) => {
         try {
             const { menu_item_id } = req.params;
+            const id = {
+                where: {
+                    id: +menu_item_id
+                }
+            }
+
             const data = await fetchDataByID(Menus, +menu_item_id);
             
             if (data['data'].length == 0) {
@@ -89,10 +95,18 @@ const MenuItems = class {
                 })
             }
             
-            const editedRow = await editRowByRowID(Menus, +menu_item_id, ...req.body);
-            if (editedRow['err'] == null) {
-                return res.status(200).json({
-                    success: true,
+            const editedRow = await editRowByRowID(Menus, id, req.body);console.log("EditedROw", editedRow)
+            if (editedRow['data'] == 0) {
+                return res.status(editedRow['code']).json({
+                    success: editedRow['err'],
+                    message: "Menu item done edited ",
+                    data: editedRow['data'],
+                })
+            }
+
+            if (!editedRow['err']) {
+                return res.status(editedRow['code']).json({
+                    success: !editedRow['err'],
                     message: "Success get menu item",
                     data: editedRow['data'],
                 })
@@ -118,9 +132,9 @@ const MenuItems = class {
                 })
             }
 
-            if (data['err'] == null && data['data'] == 1) {
+            if (data['err'] == false && data['data'] == 1) {
                 return res.status(data['code']).json({
-                    success: true,
+                    success: !data['err'],
                     message: "Success deleting menu item",
                     data: data['data'],
                 })

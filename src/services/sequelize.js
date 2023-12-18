@@ -16,13 +16,16 @@ const createNewRow = async (model, data, options) => {
         
         if (newRow) {
             await t.commit();
-            result['err'] = null;
+            result['err'] = false;
+            result['code'] = 201;
             result['data'] = newRow.toJSON();
         }
     } catch (err) {
         await t.rollback();
 
-        result['err'] = err.message;
+        result['err'] = true;
+        result['code'] = 500;
+        result['data'] = err.message;
     }
 
     return result;
@@ -35,11 +38,14 @@ const fetchAllData = async (model, options) => {
         const data = await model.findAll({ ...options });
         
         if (data) {
-            result['err'] = null;
+            result['err'] = false;
+            result['code'] = 200;
             result['data'] = data.map(items => items.toJSON());
         }
     } catch (err) {
-        result['err'] = err.message;
+        result['err'] = true;
+        result['code'] = 500;
+        result['data'] = err.message;
     }
 
     return result;
@@ -56,7 +62,8 @@ const fetchDataByID = async (model, id, options) => {
         }, { ...options });
         
         if (data) {
-            result['err'] = null;
+            result['err'] = false;
+            result['code'] = 200;
             result['data'] = data.map(items => items.toJSON());
         }
     } catch (err) {
@@ -66,28 +73,36 @@ const fetchDataByID = async (model, id, options) => {
     return result;
 }
 
-const editRowByRowID = async (model, ids, data, options) => {
+const editRowByRowID = async (model, id, data, options) => {
     let result = {};
     const t = await sequelize.transaction();
-    console.log("ID", ...ids)
-    // try {
-    //     const updatedRow = await model.update(...data, ...ids, {
-    //         ...options,
-    //         transaction: t
-    //     });
+    
+    try {
+        const updatedRow = await model.update(data, id, {
+            ...options,
+            transaction: t
+        });
         
-    //     if (updatedRow) {
-    //         await t.commit();
-    //         result['err'] = null;
-    //         result['data'] = updatedRow.toJSON();
-    //     }
-    // } catch (err) {
-    //     await t.rollback();
+        if (updatedRow == 0) {
+            await t.rollback();
+            result['err'] = true;
+            result['code'] = 404;
+            result['data'] = updatedRow;
+        } else {
+            await t.commit();
+            result['err'] = false;
+            result['code'] = 201;
+            result['data'] = updatedRow;
+        }
+    } catch (err) {
+        await t.rollback();
 
-    //     result['err'] = err.message;
-    // }
+        result['err'] = true;
+        result['code'] = 500;
+        result['data'] = err.message;
+    }
 
-    // return result;
+    return result;
 }
 
 const deleteRowByRowID = async (model, ids, options) => {
